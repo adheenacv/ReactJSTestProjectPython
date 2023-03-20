@@ -12,11 +12,11 @@ class ReactSelectPage:
 
     def basic_multi_select(self):
         select_component = ReactMultiSelect(self.__browser, By.XPATH,
-                                            "//h4[text()='Multi']/parent::div/following-sibling::div")
+                                            "//h4[text()='Multi']/parent::div/following-sibling::div", auto_close=True)
         return select_component
 
     def multi_select_with_color(self):
         select_component = ReactMultiSelect(self.__browser, By.XPATH,
-                                            "//h4[text()='Multi Select']/parent::div/following-sibling::div")
+                                            "//h4[text()='Multi Select']/parent::div/following-sibling::div", auto_close=False)
         return select_component
 

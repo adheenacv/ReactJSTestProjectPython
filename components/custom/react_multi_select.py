@@ -7,11 +7,13 @@ class ReactMultiSelect:
     __browser = None
     __element = None
     __parent = None
+    __auto_close = True
 
-    def __init__(self, browser, strategy, locator, parent=None):
+    def __init__(self, browser, strategy, locator, auto_close=True, parent=None):
         self.__browser = browser
         self.__element = finder.find_one_element(browser, strategy, locator, parent)
         self.__parent = parent
+        self.__auto_close = auto_close
 
         if self.__element:
             self.__browser.execute_script("arguments[0].scrollIntoView();", self.__element)
@@ -39,29 +41,31 @@ class ReactMultiSelect:
 
         dropdown_list_container = finder.find_one_element(self.__browser, By.CSS_SELECTOR,
                                                           "[id$='-listbox']", self.__element)
-
         list_item = finder.find_one_element(self.__browser, By.XPATH,
                                             ".//div[contains(@id,'-option-')][text()='" + item + "']",
                                             dropdown_list_container)
         list_item.click()
 
-        dropdown_button.click()
+        if not self.__auto_close:
+            dropdown_button.click()
 
     def select_multiple_items(self, items):
         dropdown_button = finder.find_one_element(self.__browser, By.CSS_SELECTOR,
                                                   "span[class$='indicatorSeparator'] ~ div", self.__element)
         dropdown_button.click()
 
-        dropdown_list_container = finder.find_one_element(self.__browser, By.CSS_SELECTOR,
-                                                          "div[id$='-listbox']", self.__element)
-
         for item in items:
+            dropdown_list_container = finder.find_one_element(self.__browser, By.CSS_SELECTOR,
+                                                              "div[id$='-listbox']", self.__element)
             list_item = finder.find_one_element(self.__browser, By.XPATH,
                                                 ".//div[contains(@id,'-option-')][text()='" + item + "']",
                                                 dropdown_list_container)
             list_item.click()
+            if self.__auto_close:
+                dropdown_button.click()
 
-        dropdown_button.click()
+        if not self.__auto_close:
+            dropdown_button.click()
 
     def get_selected_items(self):
         selected_items = []
