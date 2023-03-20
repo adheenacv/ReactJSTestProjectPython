@@ -1,5 +1,3 @@
-import time
-
 import pytest
 from selenium import webdriver
 
@@ -33,7 +31,6 @@ def test_clear_all_list_in_basic_multi_select(browser):
 def test_select_multiple_items_in_basic_multi_select(browser):
     react_page = ReactSelectPage(browser)
     react_page.basic_multi_select().click_on_clear_all_items()
-    time.sleep(3)
 
     items = ['Red', 'Purple', 'Orange', 'Yellow']
     react_page.basic_multi_select().select_multiple_items(items)
