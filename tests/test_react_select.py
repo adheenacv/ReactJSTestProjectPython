@@ -3,6 +3,7 @@ from selenium import webdriver
 
 from pages.react_select_page import ReactSelectPage
 
+
 @pytest.fixture(autouse=True)
 def browser():
     browser = webdriver.Chrome()
@@ -12,6 +13,7 @@ def browser():
     yield browser
 
     browser.close()
+
 
 def test_pre_selected_list_in_basic_multi_select(browser):
     expected_list = ['Purple', 'Red']
@@ -37,6 +39,7 @@ def test_select_multiple_items_in_basic_multi_select(browser):
     actual_list = react_page.basic_multi_select().get_selected_items()
     assert actual_list == items
 
+
 def test_clear_single_item_in_basic_multi_select(browser):
     initial_list = ['Purple', 'Red']
     item_to_be_removed = 'Purple'
@@ -47,6 +50,7 @@ def test_clear_single_item_in_basic_multi_select(browser):
     actual_list = react_page.basic_multi_select().get_selected_items()
 
     assert actual_list == initial_list
+
 
 def test_pre_selected_list_in_multi_select_with_color(browser):
     expected_list = ['Ocean', 'Blue']
@@ -83,4 +87,3 @@ def test_clear_single_item_in_multi_select_with_color(browser):
     actual_list = react_page.multi_select_with_color().get_selected_items()
 
     assert actual_list == initial_list
-
