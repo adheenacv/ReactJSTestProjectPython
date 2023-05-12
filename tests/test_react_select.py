@@ -6,7 +6,10 @@ from pages.react_select_page import ReactSelectPage
 
 @pytest.fixture(autouse=True)
 def browser():
-    browser = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    browser = webdriver.Chrome(options=options)
     browser.maximize_window()
     browser.get('https://react-select.com/home')
 
